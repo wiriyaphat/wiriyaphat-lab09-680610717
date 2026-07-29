@@ -31,18 +31,27 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/api/me", (req: Request, res: Response) => {
-  return res.status(200).json({
-    success: true,
-    message: "Student Information",
-    data: {
-      studentId: "680610717",
-      firstName: "Wiriyaphat",
-      lastName: "Phromphong",
-      program: "CPE",
-      section: "001",
-    },
-  });
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Student Information",
+      data: {
+        studentId: "680610717",
+        firstName: "Wiriyaphat",
+        lastName: "Phromphong",
+        program: "CPE",
+        section: "001",
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Somthing is wrong, please try again",
+      error: err,
+    });
+  }
 });
+
 app.use("/api/v2/students", studentRouter_v2);
 app.use("/api/v3/students", studentRouter_v3);
 app.use("/api/v2/courses", courseRouter_v2);

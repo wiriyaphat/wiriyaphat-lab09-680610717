@@ -23,7 +23,7 @@ router.get("/", authenticateToken, (req: CustomRequest, res: Response) => {
     const user = req.user;
     if (!user) {
       return res.status(403).json({
-        ok: "false",
+        ok: false,
         message: "Invalid UserName or Password",
       });
     }
@@ -33,7 +33,7 @@ router.get("/", authenticateToken, (req: CustomRequest, res: Response) => {
         (studentID) => studentID.studentId === user.studentId,
       );
       return res.status(200).json({
-        ok: "true",
+        ok: true,
         role: "student",
         enrollments: studentEnrollData,
       });
@@ -44,7 +44,7 @@ router.get("/", authenticateToken, (req: CustomRequest, res: Response) => {
       enrollments: enrollments,
     });
   } catch (err) {
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: "Something is wrong, please try again",
       error: err,
@@ -62,7 +62,7 @@ router.post(
 
       if (!user) {
         return res.status(403).json({
-          ok: "false",
+          ok: false,
           message: "Invalid UserName or Password",
         });
       }
@@ -104,7 +104,7 @@ router.post(
         message: "Enroll Success!!",
       });
     } catch (err) {
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: "Somthing is wrong, please try again",
         error: err,
@@ -149,7 +149,7 @@ router.delete("/", authenticateToken, (req: CustomRequest, res: Response) => {
       message: "You has dropped from this course. See you next semester.",
     });
   } catch (err) {
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: "Somthing is wrong, please try again",
       error: err,
