@@ -121,7 +121,7 @@ router.delete("/", authenticateToken, (req: CustomRequest, res: Response) => {
 
     if (!user) {
       return res.status(403).json({
-        ok: "false",
+        ok: false,
         message: "Invalid UserName or Password",
       });
     }
